@@ -8,6 +8,7 @@
 # Cache and temporary files
 /.cache
 /.php-cs-fixer.cache
+/.phpunit.cache
 /.phpunit.result.cache
 /tests/coverage
 /tests/*/tmp
