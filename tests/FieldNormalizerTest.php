@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 use JohannSchopplich\KirbyTools\FieldNormalizer;
 use Kirby\Cms\App;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 final class FieldNormalizerTest extends TestCase
@@ -30,7 +31,8 @@ final class FieldNormalizerTest extends TestCase
         App::destroy();
     }
 
-    public function testResolveBaseTypeReturnsKnownTypeAsIs(): void
+    #[Test]
+    public function resolve_base_type_returns_known_type_as_is(): void
     {
         $this->assertSame('text', FieldNormalizer::resolveBaseType('text'));
         $this->assertSame('blocks', FieldNormalizer::resolveBaseType('blocks'));
@@ -38,25 +40,29 @@ final class FieldNormalizerTest extends TestCase
         $this->assertSame('writer', FieldNormalizer::resolveBaseType('writer'));
     }
 
-    public function testResolveBaseTypeResolvesCustomType(): void
+    #[Test]
+    public function resolve_base_type_resolves_custom_type(): void
     {
         $this->assertSame('writer', FieldNormalizer::resolveBaseType('custom-writer'));
         $this->assertSame('files', FieldNormalizer::resolveBaseType('custom-files'));
     }
 
-    public function testResolveBaseTypeResolvesMultiLevelChain(): void
+    #[Test]
+    public function resolve_base_type_resolves_multi_level_chain(): void
     {
         // deep-custom → custom-writer → writer
         $this->assertSame('writer', FieldNormalizer::resolveBaseType('deep-custom'));
     }
 
-    public function testResolveBaseTypeReturnsUnknownTypeAsIs(): void
+    #[Test]
+    public function resolve_base_type_returns_unknown_type_as_is(): void
     {
         $result = @FieldNormalizer::resolveBaseType('nonexistent-field-type');
         $this->assertSame('nonexistent-field-type', $result);
     }
 
-    public function testNormalizeFieldsResolvesNestedCustomTypes(): void
+    #[Test]
+    public function normalize_fields_resolves_nested_custom_types(): void
     {
         $fields = [
             'title' => ['type' => 'text'],
@@ -74,7 +80,8 @@ final class FieldNormalizerTest extends TestCase
         $this->assertSame('writer', $normalized['content']['fields']['body']['type']);
     }
 
-    public function testNormalizeFieldsResolvesCustomTypesInFieldsetTabs(): void
+    #[Test]
+    public function normalize_fields_resolves_custom_types_in_fieldset_tabs(): void
     {
         $fields = [
             'blocks' => [
@@ -101,7 +108,8 @@ final class FieldNormalizerTest extends TestCase
         $this->assertSame('files', $blockFields['image']['type']);
     }
 
-    public function testNormalizeFieldsPreservesNonTypeProperties(): void
+    #[Test]
+    public function normalize_fields_preserves_non_type_properties(): void
     {
         $fields = [
             'text' => [
@@ -122,7 +130,8 @@ final class FieldNormalizerTest extends TestCase
         $this->assertTrue($normalized['image']['translateInKirbyOnly']);
     }
 
-    public function testNormalizeFieldsPreservesOptions(): void
+    #[Test]
+    public function normalize_fields_preserves_options(): void
     {
         $fields = [
             'style' => [
