@@ -4,9 +4,13 @@ declare(strict_types = 1);
 
 use JohannSchopplich\KirbyTools\FieldNormalizer;
 use Kirby\Cms\App;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
+#[RunTestsInSeparateProcesses]
+#[PreserveGlobalState(false)]
 final class FieldNormalizerTest extends TestCase
 {
     protected function setUp(): void
