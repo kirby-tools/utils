@@ -30,9 +30,9 @@ final class FieldNormalizer
      */
     public static function resolveBaseType(string $type, int $depth = 0): string
     {
-        static::$supportedTypesMap ??= array_flip(static::SUPPORTED_TYPES);
+        self::$supportedTypesMap ??= array_flip(self::SUPPORTED_TYPES);
 
-        if (isset(static::$supportedTypesMap[$type]) || $depth >= static::MAX_DEPTH) {
+        if (isset(self::$supportedTypesMap[$type]) || $depth >= self::MAX_DEPTH) {
             return $type;
         }
 
@@ -48,7 +48,7 @@ final class FieldNormalizer
             return $type;
         }
 
-        return static::resolveBaseType($extends, $depth + 1);
+        return self::resolveBaseType($extends, $depth + 1);
     }
 
     /**
@@ -59,12 +59,12 @@ final class FieldNormalizer
     {
         foreach ($fields as &$field) {
             if (isset($field['type'])) {
-                $field['type'] = static::resolveBaseType($field['type']);
+                $field['type'] = self::resolveBaseType($field['type']);
             }
 
             // Recurse into nested fields (structure, object)
             if (isset($field['fields']) && is_array($field['fields'])) {
-                $field['fields'] = static::normalizeFields($field['fields']);
+                $field['fields'] = self::normalizeFields($field['fields']);
             }
 
             // Recurse into block/layout fieldsets
@@ -73,7 +73,7 @@ final class FieldNormalizer
                     if (isset($fieldset['tabs']) && is_array($fieldset['tabs'])) {
                         foreach ($fieldset['tabs'] as &$tab) {
                             if (isset($tab['fields']) && is_array($tab['fields'])) {
-                                $tab['fields'] = static::normalizeFields($tab['fields']);
+                                $tab['fields'] = self::normalizeFields($tab['fields']);
                             }
                         }
                     }
