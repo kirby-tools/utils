@@ -17,6 +17,13 @@ Resolves blueprint fields from Kirby models:
 
 - **`resolveModelFields`**: Creates a Kirby Form from the model's blueprint fields and returns field properties (excluding `title`, `slug`, and field values)
 
+### `FieldNormalizer`
+
+Normalizes blueprint field definitions to their base types:
+
+- **`resolveBaseType`**: Resolves a custom field type to its standard base type by following the `extends` chain
+- **`normalizeFields`**: Normalizes a fields array, recursing into nested fields and `fieldsets[*].tabs[*].fields`
+
 ## Used By
 
 - [kirby-content-translator](https://kirby.tools/content-translator)
