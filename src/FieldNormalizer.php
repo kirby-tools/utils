@@ -6,10 +6,6 @@ namespace JohannSchopplich\KirbyTools;
 
 use Kirby\Form\Field;
 
-/**
- * Normalizes Kirby field definitions: resolves custom types to their
- * standard base types and recurses into nested fields and fieldsets.
- */
 final class FieldNormalizer
 {
     private const SUPPORTED_TYPES = [
@@ -62,12 +58,12 @@ final class FieldNormalizer
                 $field['type'] = self::resolveBaseType($field['type']);
             }
 
-            // Recurse into nested fields (structure, object)
+            // `structure` and `object` fields carry their own fields
             if (isset($field['fields']) && is_array($field['fields'])) {
                 $field['fields'] = self::normalizeFields($field['fields']);
             }
 
-            // Recurse into block/layout fieldsets
+            // `blocks` and `layout` fields carry theirs inside fieldset tabs
             if (isset($field['fieldsets']) && is_array($field['fieldsets'])) {
                 foreach ($field['fieldsets'] as &$fieldset) {
                     if (isset($fieldset['tabs']) && is_array($fieldset['tabs'])) {
