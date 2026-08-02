@@ -23,7 +23,7 @@ final class ModelResolver
     }
 
     /**
-     * Resolves a model from a Panel view path: `site`, `pages/xxx` or `pages/xxx/files/yyy`.
+     * Resolves a model from a Panel view path, e.g. `site`, `pages/xxx` or `pages/xxx/files/yyy`.
      *
      * Returns `null` only for unrecognized path patterns – a recognized path
      * whose model is missing throws instead.
