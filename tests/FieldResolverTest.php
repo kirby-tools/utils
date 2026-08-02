@@ -13,11 +13,11 @@ use PHPUnit\Framework\TestCase;
 #[PreserveGlobalState(false)]
 final class FieldResolverTest extends TestCase
 {
-    private App $kirby;
+    private App $app;
 
     protected function setUp(): void
     {
-        $this->kirby = new App([
+        $this->app = new App([
             'roots' => ['index' => __DIR__],
             'blueprints' => [
                 'pages/test' => [
@@ -52,7 +52,7 @@ final class FieldResolverTest extends TestCase
     #[Test]
     public function resolves_fields_excluding_title_slug_and_values(): void
     {
-        $page = $this->kirby->page('test-page');
+        $page = $this->app->page('test-page');
         $fields = FieldResolver::resolveModelFields($page);
 
         // Contains blueprint-defined fields
