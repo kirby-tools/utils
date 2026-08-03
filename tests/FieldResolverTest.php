@@ -50,7 +50,7 @@ final class FieldResolverTest extends TestCase
     }
 
     #[Test]
-    public function resolves_fields_excluding_title_slug_and_values(): void
+    public function resolves_fields_excluding_title_and_slug_and_omitting_values(): void
     {
         $page = $this->app->page('test-page');
         $fields = FieldResolver::resolveModelFields($page);
