@@ -58,12 +58,12 @@ final class FieldNormalizer
                 $field['type'] = self::resolveBaseType($field['type']);
             }
 
-            // `structure` and `object` fields carry their own fields
+            // `structure` and `object` fields carry their own fields.
             if (isset($field['fields']) && is_array($field['fields'])) {
                 $field['fields'] = self::normalizeFields($field['fields']);
             }
 
-            // `blocks` and `layout` fields carry theirs inside fieldset tabs
+            // `blocks` and `layout` fields carry theirs inside fieldset tabs.
             if (isset($field['fieldsets']) && is_array($field['fieldsets'])) {
                 foreach ($field['fieldsets'] as &$fieldset) {
                     if (isset($fieldset['tabs']) && is_array($fieldset['tabs'])) {

@@ -35,7 +35,7 @@ final class ModelResolver
         $kirby = App::instance();
 
         return match (true) {
-            // Covers `account/files/*`, `pages/xxx/files/*`, `site/files/*` and `users/xxx/files/*`
+            // Covers `account/files/*`, `pages/xxx/files/*`, `site/files/*` and `users/xxx/files/*`.
             preg_match('!(account|pages\/[^\/]+|site|users\/[^\/]+)\/files\/(.+)!', $path, $matches) === 1
                 => Find::file($matches[1], $matches[2]),
             str_starts_with($path, 'pages/') => Find::page(substr($path, 6)),

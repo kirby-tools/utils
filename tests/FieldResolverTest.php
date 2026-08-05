@@ -61,11 +61,9 @@ final class FieldResolverTest extends TestCase
         $this->assertSame('text', $fields['text']['type']);
         $this->assertSame('textarea', $fields['description']['type']);
 
-        // Excludes title and slug
         $this->assertArrayNotHasKey('title', $fields);
         $this->assertArrayNotHasKey('slug', $fields);
 
-        // Values are stripped
         $this->assertArrayNotHasKey('value', $fields['text']);
         $this->assertArrayNotHasKey('value', $fields['description']);
     }

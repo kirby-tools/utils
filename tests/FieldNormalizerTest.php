@@ -149,7 +149,7 @@ final class FieldNormalizerTest extends TestCase
 
         $normalized = FieldNormalizer::normalizeFields($fields);
 
-        // Options are passed through as-is (normalization is the consumer's responsibility)
+        // Options are passed through as-is (normalization is the consumer's responsibility).
         $this->assertSame(['grid' => 'Grid', 'list' => 'List'], $normalized['style']['options']);
     }
 }
