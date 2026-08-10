@@ -33,7 +33,7 @@ final class QueryResolverTest extends TestCase
     }
 
     #[Test]
-    public function resolve_replaces_a_placeholder_with_its_query_result(): void
+    public function replaces_a_placeholder_with_its_query_result(): void
     {
         $this->assertSame(
             'Analyzing Kirby',
@@ -42,7 +42,7 @@ final class QueryResolverTest extends TestCase
     }
 
     #[Test]
-    public function resolve_replaces_every_placeholder_in_one_value(): void
+    public function replaces_every_placeholder_in_one_value(): void
     {
         $this->assertSame(
             'Analyzing Kirby – about',
@@ -51,7 +51,7 @@ final class QueryResolverTest extends TestCase
     }
 
     #[Test]
-    public function resolve_keeps_the_text_around_a_placeholder(): void
+    public function keeps_the_text_around_a_placeholder(): void
     {
         $this->assertSame(
             'SEO: Analyzing Kirby!',
@@ -60,7 +60,7 @@ final class QueryResolverTest extends TestCase
     }
 
     #[Test]
-    public function resolve_empties_a_placeholder_whose_query_returns_null(): void
+    public function empties_a_placeholder_whose_query_returns_null(): void
     {
         $this->assertSame(
             '',
@@ -69,7 +69,7 @@ final class QueryResolverTest extends TestCase
     }
 
     #[Test]
-    public function resolve_returns_a_value_without_a_placeholder_unchanged(): void
+    public function returns_a_value_without_a_placeholder_unchanged(): void
     {
         $this->assertSame(
             'developers',
@@ -78,7 +78,7 @@ final class QueryResolverTest extends TestCase
     }
 
     #[Test]
-    public function resolve_returns_the_fallback_for_a_null_value(): void
+    public function returns_the_fallback_for_a_null_value(): void
     {
         $this->assertSame(
             'developers',
@@ -87,13 +87,13 @@ final class QueryResolverTest extends TestCase
     }
 
     #[Test]
-    public function resolve_returns_null_for_a_null_value_without_a_fallback(): void
+    public function returns_null_for_a_null_value_without_a_fallback(): void
     {
         $this->assertNull(QueryResolver::resolve($this->articlePage(), null));
     }
 
     #[Test]
-    public function resolve_returns_a_list_of_placeholders_unchanged(): void
+    public function returns_a_list_of_placeholders_unchanged(): void
     {
         $synonyms = ['{{ page.title }}', 'kirby'];
 
