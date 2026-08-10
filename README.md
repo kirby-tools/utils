@@ -17,6 +17,12 @@ Resolves blueprint fields from Kirby models:
 
 - **`resolveModelFields`**: Creates a Kirby Form from the model's blueprint fields and returns field properties (excluding `title`, `slug`, and field values)
 
+### `QueryResolver`
+
+Resolves Kirby queries written into blueprint values:
+
+- **`resolve`**: Replaces every `{{ ... }}` placeholder in a string with its query result against the model, and returns any non-string value untouched
+
 ### `FieldNormalizer`
 
 Normalizes blueprint field definitions to their base types:
@@ -29,6 +35,7 @@ Normalizes blueprint field definitions to their base types:
 - [kirby-content-translator](https://kirby.tools/content-translator)
 - [kirby-copilot](https://kirby.tools/copilot)
 - [kirby-minimap](https://kirby.tools/minimap)
+- [kirby-seo-audit](https://kirby.tools/seo-audit)
 
 ## License
 
