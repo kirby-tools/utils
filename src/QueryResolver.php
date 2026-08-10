@@ -9,11 +9,8 @@ use Kirby\Cms\ModelWithContent;
 final class QueryResolver
 {
     /**
-     * Replaces each `{{ ... }}` placeholder in a blueprint value with the
-     * result of its Kirby query against the model.
-     *
-     * Only a string carries placeholders, so any other value – a list of
-     * synonyms, a boolean toggle – passes through untouched.
+     * Replaces each `{{ ... }}` placeholder in a string with the result of its
+     * Kirby query against the model. Any other value passes through untouched.
      */
     public static function resolve(
         ModelWithContent $model,
