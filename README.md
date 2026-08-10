@@ -32,10 +32,10 @@ Normalizes blueprint field definitions to their base types:
 
 ## Used By
 
-- [kirby-content-translator](https://kirby.tools/content-translator)
 - [kirby-copilot](https://kirby.tools/copilot)
-- [kirby-minimap](https://kirby.tools/minimap)
+- [kirby-content-translator](https://kirby.tools/content-translator)
 - [kirby-seo-audit](https://kirby.tools/seo-audit)
+- [kirby-minimap](https://kirby.tools/minimap)
 
 ## License
 
