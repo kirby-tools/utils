@@ -36,6 +36,7 @@ Normalizes blueprint field definitions to their base types:
 - [kirby-content-translator](https://kirby.tools/content-translator)
 - [kirby-seo-audit](https://kirby.tools/seo-audit)
 - [kirby-minimap](https://kirby.tools/minimap)
+- [kirby-serp-preview](https://kirby.tools/serp-preview)
 
 ## License
 
