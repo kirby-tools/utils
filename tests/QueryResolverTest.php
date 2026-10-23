@@ -2,9 +2,9 @@
 
 declare(strict_types = 1);
 
-use JohannSchopplich\KirbyTools\QueryResolver;
 use Kirby\Cms\App;
 use Kirby\Cms\Page;
+use KirbyTools\Utils\QueryResolver;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use PHPUnit\Framework\Attributes\Test;

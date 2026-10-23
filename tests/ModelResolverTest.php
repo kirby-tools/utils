@@ -2,11 +2,11 @@
 
 declare(strict_types = 1);
 
-use JohannSchopplich\KirbyTools\ModelResolver;
 use Kirby\Cms\App;
 use Kirby\Cms\File;
 use Kirby\Cms\Page;
 use Kirby\Cms\Site;
+use KirbyTools\Utils\ModelResolver;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use PHPUnit\Framework\Attributes\Test;

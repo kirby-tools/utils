@@ -2,8 +2,8 @@
 
 declare(strict_types = 1);
 
-use JohannSchopplich\KirbyTools\FieldNormalizer;
 use Kirby\Cms\App;
+use KirbyTools\Utils\FieldNormalizer;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use PHPUnit\Framework\Attributes\Test;

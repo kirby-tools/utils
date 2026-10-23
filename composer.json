@@ -13,19 +13,24 @@
     }
   ],
   "require": {
-    "php": ">=8.2"
+    "php": ">=8.3"
   },
   "require-dev": {
-    "getkirby/cms": "^5",
+    "getkirby/cms": "^6",
     "phpunit/phpunit": "^12"
   },
+  "conflict": {
+    "getkirby/cms": "<6"
+  },
+  "minimum-stability": "beta",
+  "prefer-stable": true,
   "scripts": {
     "test": "phpunit",
     "csfix": "@php tools/phpcs/vendor/bin/php-cs-fixer fix"
   },
   "autoload": {
     "psr-4": {
-      "JohannSchopplich\\KirbyTools\\": "src/"
+      "KirbyTools\\Utils\\": "src/"
     }
   },
   "config": {
