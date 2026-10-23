@@ -2,6 +2,25 @@
 
 Shared utility classes for [Kirby Tools plugins](https://kirby.tools). This package provides common model and field resolution logic used across multiple plugins to avoid ambiguous class resolution when multiple plugins are installed together.
 
+## Requirements
+
+- Kirby 6
+- PHP 8.3+
+
+Version 1 supports Kirby 6 only. Kirby 4 and 5 plugins stay on `^0.1`.
+
+## Installation
+
+```bash
+composer require johannschopplich/kirby-tools-utils
+```
+
+All classes live in the `KirbyTools\Utils` namespace:
+
+```php
+use KirbyTools\Utils\FieldResolver;
+```
+
 ## Classes
 
 ### `ModelResolver`
@@ -15,7 +34,7 @@ Resolves Kirby CMS models from different identifier formats:
 
 Resolves blueprint fields from Kirby models:
 
-- **`resolveModelFields`**: Creates a Kirby Form from the model's blueprint fields and returns field properties (excluding `title`, `slug`, and field values)
+- **`resolveModelFields`**: Creates a Kirby Form from the model's blueprint fields and returns field properties (excluding `title`, `slug`, and field values). Raw blueprint keys a field doesn't export, like `translate` or a custom `copilot` key, are merged back, including in nested and block fields
 
 ### `QueryResolver`
 
@@ -27,7 +46,7 @@ Resolves Kirby queries written into blueprint values:
 
 Normalizes blueprint field definitions to their base types:
 
-- **`resolveBaseType`**: Resolves a custom field type to its standard base type by following the `extends` chain
+- **`resolveBaseType`**: Resolves a custom field type to its standard base type: the type of the nearest core field class its class extends
 - **`normalizeFields`**: Normalizes a fields array, recursing into nested fields and `fieldsets[*].tabs[*].fields`
 
 ## Used By
@@ -35,7 +54,6 @@ Normalizes blueprint field definitions to their base types:
 - [kirby-copilot](https://kirby.tools/copilot)
 - [kirby-content-translator](https://kirby.tools/content-translator)
 - [kirby-seo-audit](https://kirby.tools/seo-audit)
-- [kirby-minimap](https://kirby.tools/minimap)
 - [kirby-serp-preview](https://kirby.tools/serp-preview)
 
 ## License
