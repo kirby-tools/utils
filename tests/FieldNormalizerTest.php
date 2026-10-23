@@ -3,6 +3,9 @@
 declare(strict_types = 1);
 
 use Kirby\Cms\App;
+use Kirby\Form\Field\FilePickerField;
+use Kirby\Form\Field\StringField;
+use Kirby\Form\Field\WriterField;
 use KirbyTools\Utils\FieldNormalizer;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
@@ -17,15 +20,11 @@ final class FieldNormalizerTest extends TestCase
     {
         new App([
             'fields' => [
-                'custom-writer' => [
-                    'extends' => 'writer',
-                ],
-                'custom-files' => [
-                    'extends' => 'files',
-                ],
-                'deep-custom' => [
-                    'extends' => 'custom-writer',
-                ],
+                'custom-writer' => CustomWriterField::class,
+                'custom-files' => CustomFilePickerField::class,
+                'deep-custom' => DeepCustomField::class,
+                'custom-string' => CustomStringField::class,
+                'writer-alias' => WriterField::class,
             ],
         ]);
     }
@@ -40,7 +39,9 @@ final class FieldNormalizerTest extends TestCase
     {
         $this->assertSame('text', FieldNormalizer::resolveBaseType('text'));
         $this->assertSame('blocks', FieldNormalizer::resolveBaseType('blocks'));
-        $this->assertSame('files', FieldNormalizer::resolveBaseType('files'));
+        $this->assertSame('filepicker', FieldNormalizer::resolveBaseType('filepicker'));
+        $this->assertSame('pagepicker', FieldNormalizer::resolveBaseType('pagepicker'));
+        $this->assertSame('userpicker', FieldNormalizer::resolveBaseType('userpicker'));
         $this->assertSame('writer', FieldNormalizer::resolveBaseType('writer'));
     }
 
@@ -48,21 +49,33 @@ final class FieldNormalizerTest extends TestCase
     public function resolve_base_type_resolves_custom_type(): void
     {
         $this->assertSame('writer', FieldNormalizer::resolveBaseType('custom-writer'));
-        $this->assertSame('files', FieldNormalizer::resolveBaseType('custom-files'));
+        $this->assertSame('filepicker', FieldNormalizer::resolveBaseType('custom-files'));
     }
 
     #[Test]
     public function resolve_base_type_resolves_multi_level_chain(): void
     {
-        // deep-custom → custom-writer → writer
+        // DeepCustomField → CustomWriterField → WriterField
         $this->assertSame('writer', FieldNormalizer::resolveBaseType('deep-custom'));
+    }
+
+    #[Test]
+    public function resolve_base_type_resolves_type_registered_with_core_class(): void
+    {
+        $this->assertSame('writer', FieldNormalizer::resolveBaseType('writer-alias'));
+    }
+
+    #[Test]
+    public function resolve_base_type_returns_type_without_core_ancestor_as_is(): void
+    {
+        $this->assertSame('custom-string', FieldNormalizer::resolveBaseType('custom-string'));
     }
 
     #[Test]
     public function resolve_base_type_returns_unknown_type_as_is(): void
     {
-        $result = @FieldNormalizer::resolveBaseType('nonexistent-field-type');
-        $this->assertSame('nonexistent-field-type', $result);
+        $this->assertSame('nonexistent-field-type', FieldNormalizer::resolveBaseType('nonexistent-field-type'));
+        $this->assertSame('pages', FieldNormalizer::resolveBaseType('pages'));
     }
 
     #[Test]
@@ -109,7 +122,7 @@ final class FieldNormalizerTest extends TestCase
 
         $blockFields = $normalized['blocks']['fieldsets']['myblock']['tabs']['content']['fields'];
         $this->assertSame('writer', $blockFields['text']['type']);
-        $this->assertSame('files', $blockFields['image']['type']);
+        $this->assertSame('filepicker', $blockFields['image']['type']);
     }
 
     #[Test]
@@ -122,7 +135,7 @@ final class FieldNormalizerTest extends TestCase
                 'translateInKirbyOnly' => false,
             ],
             'image' => [
-                'type' => 'files',
+                'type' => 'filepicker',
                 'translateInKirbyOnly' => true,
             ],
         ];
@@ -152,4 +165,20 @@ final class FieldNormalizerTest extends TestCase
         // Options are passed through as-is (normalization is the consumer's responsibility).
         $this->assertSame(['grid' => 'Grid', 'list' => 'List'], $normalized['style']['options']);
     }
+}
+
+class CustomWriterField extends WriterField
+{
+}
+
+final class CustomFilePickerField extends FilePickerField
+{
+}
+
+final class DeepCustomField extends CustomWriterField
+{
+}
+
+final class CustomStringField extends StringField
+{
 }
