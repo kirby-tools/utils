@@ -7,7 +7,7 @@ Shared utility classes for [Kirby Tools plugins](https://kirby.tools). This pack
 - Kirby 6
 - PHP 8.3+
 
-Version 1 supports Kirby 6 only. Kirby 4 and 5 plugins stay on `^0.1`.
+Kirby 4 and 5 plugins stay on `^0.1`.
 
 ## Installation
 
@@ -34,7 +34,7 @@ Resolves Kirby CMS models from different identifier formats:
 
 Resolves blueprint fields from Kirby models:
 
-- **`resolveModelFields`**: Creates a Kirby Form from the model's blueprint fields and returns field properties (excluding `title`, `slug`, and field values). Raw blueprint keys a field doesn't export, like `translate` or a custom `copilot` key, are merged back, including in nested and block fields
+- **`resolveModelFields`**: Creates a Kirby Form from the model's blueprint fields and returns the exported field properties (excluding `title`, `slug`, and field values), keyed by the lowercased field name. Custom blueprint keys such as `copilot` are not exported; read them from `$model->blueprint()->fields()`
 
 ### `QueryResolver`
 
@@ -46,7 +46,7 @@ Resolves Kirby queries written into blueprint values:
 
 Normalizes blueprint field definitions to their base types:
 
-- **`resolveBaseType`**: Resolves a custom field type to its standard base type: the type of the nearest core field class its class extends
+- **`resolveBaseType`**: Resolves a custom field type to its base type: the type of the nearest core field class among its registered class and that class's parents. Core types and `markdown` are returned as is
 - **`normalizeFields`**: Normalizes a fields array, recursing into nested fields and `fieldsets[*].tabs[*].fields`
 
 ## Used By
