@@ -27,6 +27,9 @@ final class FieldResolverTest extends TestCase
                         'description' => ['type' => 'textarea'],
                         'metaTitle' => ['type' => 'text'],
                         'sku' => ['type' => 'text', 'translate' => false],
+                        'image' => ['type' => 'files'],
+                        'related' => ['type' => 'pages'],
+                        'author' => ['type' => 'users'],
                         'faq' => [
                             'type' => 'structure',
                             'fields' => [
@@ -87,7 +90,7 @@ final class FieldResolverTest extends TestCase
     }
 
     #[Test]
-    public function keys_fields_by_their_lowercased_name(): void
+    public function keys_metaTitle_as_metatitle(): void
     {
         $fields = FieldResolver::resolveModelFields($this->app->page('test-page'));
 
@@ -96,7 +99,7 @@ final class FieldResolverTest extends TestCase
     }
 
     #[Test]
-    public function exports_translate_at_every_depth(): void
+    public function exports_translate_in_nested_and_block_fields(): void
     {
         $fields = FieldResolver::resolveModelFields($this->app->page('test-page'));
 
@@ -104,5 +107,15 @@ final class FieldResolverTest extends TestCase
         $this->assertFalse($fields['sku']['translate']);
         $this->assertFalse($fields['faq']['fields']['id']['translate']);
         $this->assertFalse($fields['blocks']['fieldsets']['note']['tabs']['content']['fields']['text']['translate']);
+    }
+
+    #[Test]
+    public function resolves_files_pages_and_users_to_their_picker_types(): void
+    {
+        $fields = FieldResolver::resolveModelFields($this->app->page('test-page'));
+
+        $this->assertSame('filepicker', $fields['image']['type']);
+        $this->assertSame('pagepicker', $fields['related']['type']);
+        $this->assertSame('userpicker', $fields['author']['type']);
     }
 }

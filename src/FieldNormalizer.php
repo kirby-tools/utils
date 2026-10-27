@@ -11,25 +11,23 @@ use Kirby\Form\Field;
 final class FieldNormalizer
 {
     /**
-     * Field types that consumers treat as base types although Kirby's core
-     * doesn't register them, like the markdown field plugin.
+     * Plugin field types that consumers treat as base types although Kirby's
+     * core doesn't register them, like the markdown field plugin.
      */
-    private const THIRD_PARTY_TYPES = ['markdown'];
+    private const PLUGIN_BASE_TYPES = ['markdown'];
 
-    /**
-     * Core field types keyed by their class name.
-     */
     private static array|null $coreTypesByClass = null;
 
     /**
-     * Resolves a field type to its core base type: the type of the nearest
-     * core field class among its registered class and that class's parents.
+     * Resolves a field type to the type of the nearest core field class among
+     * its registered class and that class's parents; `PLUGIN_BASE_TYPES` and
+     * types without such a class come back as is.
      */
     public static function resolveBaseType(string $type): string
     {
         self::$coreTypesByClass ??= array_flip(App::instance()->core()->fields());
 
-        if (in_array($type, self::THIRD_PARTY_TYPES, true) || in_array($type, self::$coreTypesByClass, true)) {
+        if (in_array($type, self::PLUGIN_BASE_TYPES, true) || in_array($type, self::$coreTypesByClass, true)) {
             return $type;
         }
 
