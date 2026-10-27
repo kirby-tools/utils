@@ -5,44 +5,43 @@ declare(strict_types = 1);
 namespace KirbyTools\Utils;
 
 use Kirby\Cms\App;
+use Kirby\Exception\InvalidArgumentException;
 use Kirby\Form\Field;
 
 final class FieldNormalizer
 {
-    private const SUPPORTED_TYPES = [
-        'blocks', 'buttons', 'checkboxes', 'color', 'date', 'email', 'entries',
-        'filelist', 'filepicker', 'gap', 'headline', 'hidden', 'info', 'layout',
-        'line', 'link', 'list', 'markdown', 'multiselect', 'number', 'object',
-        'pagelist', 'pagepicker', 'password', 'radio', 'range', 'select', 'slug',
-        'stats', 'structure', 'tags', 'tel', 'text', 'textarea', 'time', 'toggle',
-        'toggles', 'url', 'userpicker', 'writer',
-    ];
-
-    private static array|null $supportedTypesMap = null;
+    /**
+     * Field types that consumers treat as base types although Kirby's core
+     * doesn't register them, like the markdown field plugin.
+     */
+    private const THIRD_PARTY_TYPES = ['markdown'];
 
     /**
-     * Resolves a custom field type to its standard base type: the type of
-     * the nearest core field class its registered class extends.
+     * Core field types keyed by their class name.
+     */
+    private static array|null $coreTypesByClass = null;
+
+    /**
+     * Resolves a field type to its core base type: the type of the nearest
+     * core field class among its registered class and that class's parents.
      */
     public static function resolveBaseType(string $type): string
     {
-        self::$supportedTypesMap ??= array_flip(self::SUPPORTED_TYPES);
+        self::$coreTypesByClass ??= array_flip(App::instance()->core()->fields());
 
-        if (isset(self::$supportedTypesMap[$type])) {
+        if (in_array($type, self::THIRD_PARTY_TYPES, true) || in_array($type, self::$coreTypesByClass, true)) {
             return $type;
         }
 
-        $class = Field::$types[$type] ?? null;
-
-        if (!is_string($class) || !class_exists($class)) {
+        try {
+            $class = Field::resolve($type);
+        } catch (InvalidArgumentException) {
             return $type;
         }
-
-        $coreTypes = array_flip(App::instance()->core()->fields());
 
         for ($ancestor = $class; $ancestor !== false; $ancestor = get_parent_class($ancestor)) {
-            if (isset($coreTypes[$ancestor])) {
-                return $coreTypes[$ancestor];
+            if (isset(self::$coreTypesByClass[$ancestor])) {
+                return self::$coreTypesByClass[$ancestor];
             }
         }
 

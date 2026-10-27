@@ -5,6 +5,7 @@ declare(strict_types = 1);
 use Kirby\Cms\App;
 use Kirby\Form\Field\FilePickerField;
 use Kirby\Form\Field\StringField;
+use Kirby\Form\Field\TextareaField;
 use Kirby\Form\Field\WriterField;
 use KirbyTools\Utils\FieldNormalizer;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
@@ -25,6 +26,7 @@ final class FieldNormalizerTest extends TestCase
                 'deep-custom' => DeepCustomField::class,
                 'custom-string' => CustomStringField::class,
                 'writer-alias' => WriterField::class,
+                'markdown' => MarkdownField::class,
             ],
         ]);
     }
@@ -69,6 +71,12 @@ final class FieldNormalizerTest extends TestCase
     public function resolve_base_type_returns_type_without_core_ancestor_as_is(): void
     {
         $this->assertSame('custom-string', FieldNormalizer::resolveBaseType('custom-string'));
+    }
+
+    #[Test]
+    public function resolve_base_type_keeps_markdown_although_its_class_extends_a_core_field(): void
+    {
+        $this->assertSame('markdown', FieldNormalizer::resolveBaseType('markdown'));
     }
 
     #[Test]
@@ -132,19 +140,19 @@ final class FieldNormalizerTest extends TestCase
             'text' => [
                 'type' => 'text',
                 'translate' => true,
-                'translateInKirbyOnly' => false,
+                'copilot' => false,
             ],
             'image' => [
                 'type' => 'filepicker',
-                'translateInKirbyOnly' => true,
+                'copilot' => ['userPrompt' => 'Describe the image'],
             ],
         ];
 
         $normalized = FieldNormalizer::normalizeFields($fields);
 
         $this->assertTrue($normalized['text']['translate']);
-        $this->assertFalse($normalized['text']['translateInKirbyOnly']);
-        $this->assertTrue($normalized['image']['translateInKirbyOnly']);
+        $this->assertFalse($normalized['text']['copilot']);
+        $this->assertSame(['userPrompt' => 'Describe the image'], $normalized['image']['copilot']);
     }
 
     #[Test]
@@ -180,5 +188,9 @@ final class DeepCustomField extends CustomWriterField
 }
 
 final class CustomStringField extends StringField
+{
+}
+
+final class MarkdownField extends TextareaField
 {
 }
