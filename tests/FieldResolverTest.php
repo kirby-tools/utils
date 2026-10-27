@@ -76,7 +76,6 @@ final class FieldResolverTest extends TestCase
         $page = $this->app->page('test-page');
         $fields = FieldResolver::resolveModelFields($page);
 
-        // Contains blueprint-defined fields
         $this->assertArrayHasKey('text', $fields);
         $this->assertArrayHasKey('description', $fields);
         $this->assertSame('text', $fields['text']['type']);

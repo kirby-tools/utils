@@ -57,7 +57,6 @@ final class FieldNormalizerTest extends TestCase
     #[Test]
     public function resolve_base_type_resolves_multi_level_chain(): void
     {
-        // DeepCustomField → CustomWriterField → WriterField
         $this->assertSame('writer', FieldNormalizer::resolveBaseType('deep-custom'));
     }
 

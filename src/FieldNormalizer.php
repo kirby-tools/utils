@@ -10,10 +10,7 @@ use Kirby\Form\Field;
 
 final class FieldNormalizer
 {
-    /**
-     * Plugin field types that consumers treat as base types although Kirby's
-     * core doesn't register them, like the markdown field plugin.
-     */
+    /** Field plugin types consumers branch on, so they never collapse to their core parent class. */
     private const PLUGIN_BASE_TYPES = ['markdown'];
 
     private static array|null $coreTypesByClass = null;
