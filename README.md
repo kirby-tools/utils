@@ -47,6 +47,7 @@ Normalizes blueprint field definitions to their base types:
 
 - [kirby-copilot](https://kirby.tools/copilot)
 - [kirby-content-translator](https://kirby.tools/content-translator)
+- [kirby-lingohub](https://github.com/johannschopplich/kirby-lingohub)
 
 ## License
 
