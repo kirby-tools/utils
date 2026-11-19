@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6cfdefbd61e56a88cf2740fb9ca27c12",
+    "content-hash": "922ff4472dc1a69e9325f12a15888eb0",
     "packages": [],
     "packages-dev": [
         {
@@ -3135,9 +3135,11 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "beta",
-    "stability-flags": {},
-    "prefer-stable": true,
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "getkirby/cms": 10
+    },
+    "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
         "php": ">=8.3"
